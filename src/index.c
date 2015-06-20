@@ -705,8 +705,10 @@ static int truncate_racily_clean(git_index *index)
 		if ((error = git_diff_index_to_workdir(&diff, INDEX_OWNER(index), index, &diff_opts)) < 0)
 			return error;
 
-		if (git_diff_num_deltas(diff) > 0)
+		if (git_diff_num_deltas(diff) > 0) {
+			printf("smudging %s\n", entry->path);
 			entry->file_size = 0;
+		}
 
 		git_diff_free(diff);
 	}
